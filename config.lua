@@ -16,18 +16,24 @@ lvim.colorscheme = "onedarker"
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 -- add your own keymapping
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+lvim.keys.normal_mode["<C-s>"] = ":w<CR>"
+lvim.keys.insert_mode["<C-s>"] = "<ESC>:w<CR>"
 -- unmap a default keymapping
 lvim.keys.normal_mode["<C-Up>"] = ""
 -- edit a default keymapping
-lvim.keys.normal_mode["<C-q>"] = ":q<cr>"
+lvim.keys.normal_mode["<C-q>"] = ":q!<CR>"
+lvim.keys.insert_mode["<C-q>"] = "<ESC>:q!<CR>"
 
 -- My vim keymappings
 lvim.keys.normal_mode["U"] = "<C-r>"
 lvim.keys.normal_mode["<S-h>"] = "^"
 lvim.keys.normal_mode["<S-l>"] = "$"
-lvim.keys.normal_mode["<M-h>"] = ":BufferPrevious<CR>"
-lvim.keys.normal_mode["<M-l>"] = ":BufferNext<CR>"
+lvim.keys.normal_mode["<S-j>"] = "5j"
+lvim.lsp.buffer_mappings.normal_mode["K"] = nil
+lvim.keys.normal_mode["<S-k>"] = "5k"
+lvim.keys.normal_mode["<M-p>"] = ":b#<CR>"
+lvim.keys.normal_mode["<M-h>"] = ":bp<CR>"
+lvim.keys.normal_mode["<M-l>"] = ":bn<CR>"
 vim.cmd([[
   map Q gq
   noremap Y y$
@@ -35,19 +41,15 @@ vim.cmd([[
   noremap > >>
 ]])
 vim.cmd([[
+  noremap <C-f> <C-w>w
   noremap s <nop>
-  noremap sf <C-w>w
-  noremap sk <C-w>k
-  noremap sj <C-w>j
-  noremap sh <C-w>h
-  noremap sl <C-w>l
-  noremap so <C-w>o
   noremap ss :vsplit<CR>
   noremap sd :split<CR>
-  noremap stk :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
-  noremap stj :set splitbelow<CR>:split<CR>
-  noremap sth :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
-  noremap stl :set splitright<CR>:vsplit<CR>
+  noremap sk :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
+  noremap sj :set splitbelow<CR>:split<CR>
+  noremap sh :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
+  noremap sl :set splitright<CR>:vsplit<CR>
+  noremap so <C-w>o
   noremap su <C-w>t<C-w>K
   noremap sv <C-w>t<C-w>H
 ]])
@@ -73,8 +75,10 @@ lvim.builtin.telescope.defaults.mappings = {
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["q"] = { "<cmd>q<CR>", "Quit" }
 lvim.builtin.which_key.mappings["Q"] = { "<cmd>q!<CR>", "Force Quit" }
+lvim.builtin.which_key.mappings["j"] = { "J", "Join Lines" }
+lvim.builtin.which_key.vmappings["j"] = { "J", "Join Lines" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["T"] = {
+lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
   r = { "<cmd>Trouble lsp_references<cr>", "References" },
   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
@@ -83,18 +87,21 @@ lvim.builtin.which_key.mappings["T"] = {
   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
   w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
 }
+lvim.builtin.which_key.mappings["k"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Show Hover" }
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.dashboard.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 0
+lvim.builtin.nvimtree.show_icons.git = 1
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
   "c",
+  "cpp",
+  "fish",
   "javascript",
   "json",
   "lua",
