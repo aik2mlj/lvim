@@ -24,21 +24,22 @@ lvim.keys.normal_mode["<C-Up>"] = ""
 lvim.keys.normal_mode["<C-q>"] = ":q!<CR>"
 lvim.keys.insert_mode["<C-q>"] = "<ESC>:q!<CR>"
 
+lvim.keys.normal_mode["<C-d>"] = ""
+
 -- My vim keymappings
-lvim.keys.normal_mode["U"] = "<C-r>"
-lvim.keys.normal_mode["<S-h>"] = "^"
-lvim.keys.normal_mode["<S-l>"] = "$"
-lvim.keys.normal_mode["<S-j>"] = "5j"
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
-lvim.keys.normal_mode["<S-k>"] = "5k"
-lvim.keys.normal_mode["<M-p>"] = ":b#<CR>"
-lvim.keys.normal_mode["<M-h>"] = ":bp<CR>"
-lvim.keys.normal_mode["<M-l>"] = ":bn<CR>"
 vim.cmd([[
   map Q gq
   noremap Y y$
   noremap < <<
   noremap > >>
+  nnoremap U <C-r>
+]])
+vim.cmd([[
+  noremap <silent> H ^
+  noremap <silent> L $
+  noremap <silent> J 5j
+  noremap <silent> K 5k
 ]])
 vim.cmd([[
   noremap <C-f> <C-w>w
@@ -52,6 +53,11 @@ vim.cmd([[
   noremap so <C-w>o
   noremap su <C-w>t<C-w>K
   noremap sv <C-w>t<C-w>H
+]])
+vim.cmd([[
+  noremap <M-h> :bp<CR>
+  noremap <M-l> :bn<CR>
+  noremap <M-p> :b#<CR>
 ]])
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
