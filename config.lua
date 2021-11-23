@@ -18,13 +18,9 @@ lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<CR>"
 lvim.keys.insert_mode["<C-s>"] = "<ESC>:w<CR>"
--- unmap a default keymapping
-lvim.keys.normal_mode["<C-Up>"] = ""
 -- edit a default keymapping
-lvim.keys.normal_mode["<C-q>"] = ":q!<CR>"
-lvim.keys.insert_mode["<C-q>"] = "<ESC>:q!<CR>"
-
-lvim.keys.normal_mode["<C-d>"] = ""
+-- lvim.keys.normal_mode["<C-q>"] = ":q!<CR>"
+-- lvim.keys.insert_mode["<C-q>"] = "<ESC>:q!<CR>"
 
 -- My vim keymappings
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
