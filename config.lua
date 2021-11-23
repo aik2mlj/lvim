@@ -27,8 +27,8 @@ lvim.lsp.buffer_mappings.normal_mode["K"] = nil
 vim.cmd([[
   map Q gq
   noremap Y y$
-  noremap < <<
-  noremap > >>
+  nnoremap < <<
+  nnoremap > >>
   nnoremap U <C-r>
 ]])
 vim.cmd([[
@@ -51,43 +51,60 @@ vim.cmd([[
   noremap sv <C-w>t<C-w>H
 ]])
 vim.cmd([[
-  noremap <M-h> :bp<CR>
-  noremap <M-l> :bn<CR>
-  noremap <M-p> :b#<CR>
+  nnoremap <M-h> :bp<CR>
+  nnoremap <M-l> :bn<CR>
+  nnoremap <M-p> :b#<CR>
+  nnoremap <M-n> :enew<CR>
+  nnoremap <M-q> :bd<CR>
+  nnoremap <M-Q> :bd!<CR>
+  inoremap <M-h> <ESC>:bp<CR>
+  inoremap <M-l> <ESC>:bn<CR>
+  inoremap <M-p> <ESC>:b#<CR>
+  inoremap <M-n> <ESC>:enew<CR>
+  inoremap <M-q> <ESC>:bd<CR>
+  inoremap <M-Q> <ESC>:bd!<CR>
+  noremap <C-n> :vnew<CR>
+]])
+vim.cmd([[
+  nnoremap <M-J> :t .<CR>
+  nnoremap <M-K> :t .-1<CR>
+  xnoremap <M-J> :t'><CR>gv
+  xnoremap <M-K> :t-1<CR>gv
 ]])
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
 local _, actions = pcall(require, "telescope.actions")
 lvim.builtin.telescope.defaults.mappings = {
-  -- for input mode
-  i = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-k>"] = actions.move_selection_previous,
-    ["<C-n>"] = actions.cycle_history_next,
-    ["<C-p>"] = actions.cycle_history_prev,
-  },
-  -- for normal mode
-  n = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-k>"] = actions.move_selection_previous,
-  },
+	-- for input mode
+	i = {
+		["<C-j>"] = actions.move_selection_next,
+		["<C-k>"] = actions.move_selection_previous,
+		["<C-n>"] = actions.cycle_history_next,
+		["<C-p>"] = actions.cycle_history_prev,
+	},
+	-- for normal mode
+	n = {
+		["<C-j>"] = actions.move_selection_next,
+		["<C-k>"] = actions.move_selection_previous,
+	},
 }
 
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["q"] = { "<cmd>q<CR>", "Quit" }
 lvim.builtin.which_key.mappings["Q"] = { "<cmd>q!<CR>", "Force Quit" }
+lvim.builtin.which_key.mappings["c"] = nil
 lvim.builtin.which_key.mappings["j"] = { "J", "Join Lines" }
 lvim.builtin.which_key.vmappings["j"] = { "J", "Join Lines" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["t"] = {
-  name = "+Trouble",
-  r = { "<cmd>Trouble lsp_references<cr>", "References" },
-  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
-  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-  w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
+	name = "+Trouble",
+	r = { "<cmd>Trouble lsp_references<cr>", "References" },
+	f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+	d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
+	q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+	l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+	w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
 }
 lvim.builtin.which_key.mappings["k"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Show Hover" }
 
