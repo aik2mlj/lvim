@@ -51,18 +51,18 @@ vim.cmd([[
   noremap sv <C-w>t<C-w>H
 ]])
 vim.cmd([[
-  nnoremap <M-h> :bp<CR>
-  nnoremap <M-l> :bn<CR>
-  nnoremap <M-p> :b#<CR>
-  nnoremap <M-n> :enew<CR>
-  nnoremap <M-q> :bd<CR>
-  nnoremap <M-Q> :bd!<CR>
-  inoremap <M-h> <ESC>:bp<CR>
-  inoremap <M-l> <ESC>:bn<CR>
-  inoremap <M-p> <ESC>:b#<CR>
-  inoremap <M-n> <ESC>:enew<CR>
-  inoremap <M-q> <ESC>:bd<CR>
-  inoremap <M-Q> <ESC>:bd!<CR>
+  nnoremap <silent> <M-h> :bp<CR>
+  nnoremap <silent> <M-l> :bn<CR>
+  nnoremap <silent> <M-p> :b#<CR>
+  nnoremap <silent> <M-n> :enew<CR>
+  nnoremap <silent> <M-q> :bd<CR>
+  nnoremap <silent> <M-Q> :bd!<CR>
+  inoremap <silent> <M-h> <ESC>:bp<CR>
+  inoremap <silent> <M-l> <ESC>:bn<CR>
+  inoremap <silent> <M-p> <ESC>:b#<CR>
+  inoremap <silent> <M-n> <ESC>:enew<CR>
+  inoremap <silent> <M-q> <ESC>:bd<CR>
+  inoremap <silent> <M-Q> <ESC>:bd!<CR>
   noremap <C-n> :vnew<CR>
 ]])
 vim.cmd([[
