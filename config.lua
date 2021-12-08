@@ -244,12 +244,10 @@ lvim.plugins = {
 -- vim.g["vimtex_view_general_viewer"] = "zathura"
 -- vim.g["vimtex_view_method"] = "zathura"
 -- vim.g["vimtex_compiler_progname"] = "nvr"
-local autoPair = require("nvim-autopairs")
-autoPair.setup({
-	disable_filetype = { "TelescopePrompt", "tex" },
-})
-autoPair.remove_rule("$")
-autoPair.disable()
+
+lvim.builtin.autopairs.on_config_done = function(autopairs)
+	autopairs.remove_rule("$")
+end
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- lvim.autocommands.custom_groups = {
