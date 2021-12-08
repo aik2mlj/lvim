@@ -124,6 +124,8 @@ lvim.builtin.which_key.mappings["t"] = {
 	w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
 }
 lvim.builtin.which_key.mappings["k"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Show Hover" }
+lvim.builtin.which_key.mappings["r"] = { ":%s//g<Left><Left>", "Global Replace" }
+lvim.builtin.which_key.vmappings["r"] = { ":s//g<Left><Left>", "Replace" }
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
