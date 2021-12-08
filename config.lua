@@ -233,13 +233,13 @@ lvim.plugins = {
 		"folke/trouble.nvim",
 		cmd = "TroubleToggle",
 	},
-	-- { "lervag/vimtex" },
+	{ "lervag/vimtex" },
 }
--- vim.g["tex_flavor"] = "latex"
+vim.g["tex_flavor"] = "latex"
 -- vim.g["vimtex_quickfix_mode"] = 0
--- vim.g["vimtex_view_general_viewer"] = "/mnt/c/Users/ASUS/AppData/Local/SumatraPDF/SumatraPDF.exe"
--- vim.g["vimtex_view_general_options"] = "-reuse-instance -forward-search @tex @line @pdf"
--- vim.g["vimtex_view_general_options_latexmk"] = "-reuse-instance"
+vim.g["vimtex_view_general_viewer"] = "/mnt/c/Users/ASUS/AppData/Local/SumatraPDF/SumatraPDF.exe"
+vim.g["vimtex_view_general_options"] = "-reuse-instance -forward-search @tex @line @pdf"
+vim.g["vimtex_view_general_options_latexmk"] = "-reuse-instance"
 -- * If in linux, use the following lines instead.
 -- vim.g["vimtex_view_general_viewer"] = "zathura"
 -- vim.g["vimtex_view_method"] = "zathura"
