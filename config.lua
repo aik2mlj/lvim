@@ -18,12 +18,15 @@ lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<CR>"
 lvim.keys.insert_mode["<C-s>"] = "<ESC>:w<CR>"
+lvim.keys.normal_mode["<C-a>"] = "ggVG"
+lvim.keys.insert_mode["<C-a>"] = "<ESC>ggVG"
 -- edit a default keymapping
 -- lvim.keys.normal_mode["<C-q>"] = ":q!<CR>"
 -- lvim.keys.insert_mode["<C-q>"] = "<ESC>:q!<CR>"
 
 vim.opt.expandtab = false
 vim.opt.wrap = true
+vim.opt.lbr = true
 vim.opt.tw = 0
 vim.opt.virtualedit = "block"
 vim.opt.tabstop = 4
@@ -34,6 +37,11 @@ vim.opt.confirm = true
 
 -- My vim keymappings
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
+lvim.keys.normal_mode["gh"] = "<Cmd>lua vim.lsp.buf.hover()<CR>"
+vim.cmd([[
+	nnoremap <expr> j v:count ? 'j' : 'gj'
+	nnoremap <expr> k v:count ? 'k' : 'gk'
+]])
 vim.cmd([[
 	map Q gq
 	noremap Y y$
@@ -42,8 +50,8 @@ vim.cmd([[
 	nnoremap U <C-r>
 ]])
 vim.cmd([[
-	noremap <silent> H ^
-	noremap <silent> L $
+	noremap <silent> H g^
+	noremap <silent> L g$
 	noremap <silent> J 5j
 	noremap <silent> K 5k
 ]])
