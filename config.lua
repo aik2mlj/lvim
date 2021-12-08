@@ -233,17 +233,25 @@ lvim.plugins = {
 		"folke/trouble.nvim",
 		cmd = "TroubleToggle",
 	},
-	{ "lervag/vimtex" },
+	{
+		"lervag/vimtex",
+		config = function()
+			vim.g["tex_flavor"] = "latex"
+			-- vim.g["vimtex_quickfix_mode"] = 0
+			vim.g["vimtex_view_general_viewer"] = "/mnt/c/Users/ASUS/AppData/Local/SumatraPDF/SumatraPDF.exe"
+			vim.g["vimtex_view_general_options"] = "-reuse-instance -forward-search @tex @line @pdf"
+			vim.g["vimtex_view_general_options_latexmk"] = "-reuse-instance"
+			-- * If in linux, use the following lines instead.
+			-- vim.g["vimtex_view_general_viewer"] = "zathura"
+			-- vim.g["vimtex_view_method"] = "zathura"
+			-- vim.g["vimtex_compiler_progname"] = "nvr"
+		end
+	},
+	{
+		"ellisonleao/glow.nvim",
+		ft = { "markdown" },
+	},
 }
-vim.g["tex_flavor"] = "latex"
--- vim.g["vimtex_quickfix_mode"] = 0
-vim.g["vimtex_view_general_viewer"] = "/mnt/c/Users/ASUS/AppData/Local/SumatraPDF/SumatraPDF.exe"
-vim.g["vimtex_view_general_options"] = "-reuse-instance -forward-search @tex @line @pdf"
-vim.g["vimtex_view_general_options_latexmk"] = "-reuse-instance"
--- * If in linux, use the following lines instead.
--- vim.g["vimtex_view_general_viewer"] = "zathura"
--- vim.g["vimtex_view_method"] = "zathura"
--- vim.g["vimtex_compiler_progname"] = "nvr"
 
 lvim.builtin.autopairs.on_config_done = function(autopairs)
 	autopairs.remove_rule("$")
