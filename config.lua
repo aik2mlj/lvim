@@ -61,14 +61,14 @@ vim.cmd([[
 	noremap sv <C-w>t<C-w>H
 ]])
 vim.cmd([[
-	nnoremap <silent> <M-h> :bp<CR>
-	nnoremap <silent> <M-l> :bn<CR>
+	nnoremap <silent> <M-h> :BufferPrevious<CR>
+	nnoremap <silent> <M-l> :BufferNext<CR>
 	nnoremap <silent> <M-p> :b#<CR>
 	nnoremap <silent> <M-n> :enew<CR>
 	nnoremap <silent> <M-q> :bd<CR>
 	nnoremap <silent> <M-Q> :bd!<CR>
-	inoremap <silent> <M-h> <ESC>:bp<CR>
-	inoremap <silent> <M-l> <ESC>:bn<CR>
+	inoremap <silent> <M-h> <ESC>:BufferPrevious<CR>
+	inoremap <silent> <M-l> <ESC>:BufferNext<CR>
 	inoremap <silent> <M-p> <ESC>:b#<CR>
 	inoremap <silent> <M-n> <ESC>:enew<CR>
 	inoremap <silent> <M-q> <ESC>:bd<CR>
