@@ -10,8 +10,10 @@ an executable
 
 -- general
 lvim.log.level = "warn"
-lvim.format_on_save = true
+-- lvim.format_on_save = false
 lvim.colorscheme = "tokyonight"
+-- vim.g.tokyonight_style = "storm"
+-- lvim.builtin.lualine.style = "default"
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
@@ -29,11 +31,13 @@ vim.opt.wrap = true
 vim.opt.lbr = true
 vim.opt.tw = 0
 vim.opt.virtualedit = "block"
+vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.indentexpr = ""
 vim.opt.confirm = true
+vim.opt.shell = "/bin/sh"
 
 -- My vim keymappings
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
@@ -111,9 +115,11 @@ lvim.builtin.telescope.defaults.mappings = {
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["q"] = { "<cmd>q<CR>", "Quit" }
 lvim.builtin.which_key.mappings["Q"] = { "<cmd>q!<CR>", "Force Quit" }
+lvim.builtin.which_key.mappings["c"] = { "<cmd>BufferClose<CR>", "Close Buffer" }
 lvim.builtin.which_key.mappings["j"] = { "J", "Join Lines" }
 lvim.builtin.which_key.vmappings["j"] = { "J", "Join Lines" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+-- lvim.builtin.which_key.mappings["h"] = { "<cmd>nohlsearch<CR><cmd>call minimap#vim#ClearColorSearch()<CR>", "No Highlight", }
 lvim.builtin.which_key.mappings["t"] = {
 	name = "+Trouble",
 	r = { "<cmd>Trouble lsp_references<cr>", "References" },
@@ -126,6 +132,8 @@ lvim.builtin.which_key.mappings["t"] = {
 lvim.builtin.which_key.mappings["k"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Show Hover" }
 lvim.builtin.which_key.mappings["r"] = { ":%s//g<Left><Left>", "Global Replace" }
 lvim.builtin.which_key.vmappings["r"] = { ":s//g<Left><Left>", "Replace" }
+lvim.builtin.which_key.mappings["o"] = { "<cmd>SymbolsOutline<CR>", "Find Symbol" }
+lvim.builtin.which_key.mappings["z"] = { "<cmd>ZenMode<CR>", "Zen Mode" }
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -154,6 +162,16 @@ lvim.builtin.treesitter.ensure_installed = {
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
+lvim.builtin.treesitter.highlight.disable = {}
+lvim.builtin.treesitter.rainbow.enable = true
+lvim.builtin.treesitter.rainbow.colors = {
+	"Gold",
+	"Orchid",
+	"DodgerBlue",
+	-- "Cornsilk",
+	-- "Salmon",
+	-- "LawnGreen",
+}
 
 -- generic LSP settings
 
@@ -207,6 +225,14 @@ formatters.setup({
 		filetypes = { "typescript", "typescriptreact" },
 	},
 	{ exe = "stylua", filetypes = { "lua" } },
+	{
+		exe = "clang-format",
+		args = {
+			'--style="{UseTab: Never, IndentWidth: 4, TabWidth: 4}"',
+			"-i",
+		},
+		filetypes = { "c", "cpp" },
+	},
 })
 
 -- -- set additional linters
@@ -229,6 +255,7 @@ formatters.setup({
 -- Additional Plugins
 lvim.plugins = {
 	{ "folke/tokyonight.nvim" },
+	{ "rebelot/kanagawa.nvim" },
 	{
 		"folke/trouble.nvim",
 		cmd = "TroubleToggle",
@@ -237,7 +264,7 @@ lvim.plugins = {
 		"lervag/vimtex",
 		config = function()
 			vim.g["tex_flavor"] = "latex"
-			-- vim.g["vimtex_quickfix_mode"] = 0
+			vim.g["vimtex_quickfix_mode"] = 0
 			vim.g["vimtex_view_general_viewer"] = "/mnt/c/Users/ASUS/AppData/Local/SumatraPDF/SumatraPDF.exe"
 			vim.g["vimtex_view_general_options"] = "-reuse-instance -forward-search @tex @line @pdf"
 			vim.g["vimtex_view_general_options_latexmk"] = "-reuse-instance"
@@ -245,11 +272,55 @@ lvim.plugins = {
 			-- vim.g["vimtex_view_general_viewer"] = "zathura"
 			-- vim.g["vimtex_view_method"] = "zathura"
 			-- vim.g["vimtex_compiler_progname"] = "nvr"
-		end
+		end,
+	},
+	{
+		"p00f/nvim-ts-rainbow",
+		config = function() end,
 	},
 	{
 		"ellisonleao/glow.nvim",
 		ft = { "markdown" },
+	},
+	{
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && npm install",
+		ft = "markdown",
+		config = function()
+			vim.g.mkdp_auto_start = 1
+		end,
+	},
+	{
+		"ray-x/lsp_signature.nvim",
+		event = "BufRead",
+		config = function()
+			require("lsp_signature").on_attach()
+		end,
+	},
+	{
+		"simrat39/symbols-outline.nvim",
+		-- cmd = "SymbolsOutline",
+	},
+	{
+		"folke/zen-mode.nvim",
+		-- config = function()
+		-- 	require("zen-mode").setup()
+		-- end,
+	},
+	-- { "folke/twilight.nvim" },
+	{
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup({ "*" }, {
+				RGB = true, -- #RGB hex codes
+				RRGGBB = true, -- #RRGGBB hex codes
+				RRGGBBAA = true, -- #RRGGBBAA hex codes
+				rgb_fn = true, -- CSS rgb() and rgba() functions
+				hsl_fn = true, -- CSS hsl() and hsla() functions
+				css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+				css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+			})
+		end,
 	},
 }
 
@@ -257,7 +328,11 @@ lvim.builtin.autopairs.on_config_done = function(autopairs)
 	autopairs.remove_rule("$")
 end
 
+-- * Shortcuts for plugins
+lvim.keys.normal_mode["\\p"] = "<cmd>MarkdownPreviewToggle<CR>"
+
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
--- lvim.autocommands.custom_groups = {
---   { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
--- }
+lvim.autocommands.custom_groups = {
+	-- { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
+	-- { "BufWinEnter", "*", "MinimapRefresh" },
+}
