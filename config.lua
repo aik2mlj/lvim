@@ -11,7 +11,7 @@ an executable
 -- general
 lvim.log.level = "warn"
 -- lvim.format_on_save = false
-lvim.colorscheme = "tokyonight"
+lvim.colorscheme = "kanagawa"
 -- vim.g.tokyonight_style = "storm"
 -- lvim.builtin.lualine.style = "default"
 
@@ -26,7 +26,6 @@ lvim.keys.insert_mode["<C-a>"] = "<ESC>ggVG"
 -- lvim.keys.normal_mode["<C-q>"] = ":q!<CR>"
 -- lvim.keys.insert_mode["<C-q>"] = "<ESC>:q!<CR>"
 
-vim.opt.expandtab = false
 vim.opt.wrap = true
 vim.opt.lbr = true
 vim.opt.tw = 0
@@ -75,8 +74,10 @@ vim.cmd([[
 vim.cmd([[
 	nnoremap <silent> <M-h> :BufferPrevious<CR>
 	nnoremap <silent> <M-l> :BufferNext<CR>
+    nnoremap <silent> <M-H> :BufferMovePrevious<CR>
+    nnoremap <silent> <M-L> :BufferMoveNext<CR>
 	nnoremap <silent> <M-p> :b#<CR>
-	nnoremap <silent> <M-n> :enew<CR>
+	nnoremap <silent> <M-n> :e 
 	nnoremap <silent> <M-q> :bd<CR>
 	nnoremap <silent> <M-Q> :bd!<CR>
 	inoremap <silent> <M-h> <ESC>:BufferPrevious<CR>
@@ -162,16 +163,17 @@ lvim.builtin.treesitter.ensure_installed = {
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
-lvim.builtin.treesitter.highlight.disable = {}
-lvim.builtin.treesitter.rainbow.enable = true
-lvim.builtin.treesitter.rainbow.colors = {
-	"Gold",
-	"Orchid",
-	"DodgerBlue",
-	-- "Cornsilk",
-	-- "Salmon",
-	-- "LawnGreen",
-}
+-- lvim.builtin.treesitter.highlight.disable = {}
+-- lvim.builtin.treesitter.rainbow.enable = true
+-- lvim.builtin.treesitter.rainbow.disable = { "latex" }
+-- lvim.builtin.treesitter.rainbow.colors = {
+-- 	"Gold",
+-- 	-- "Salmon",
+-- 	"Orchid",
+-- 	"DodgerBlue",
+-- 	-- "Cornsilk",
+-- 	-- "LawnGreen",
+-- }
 
 -- generic LSP settings
 
@@ -189,13 +191,14 @@ lvim.lsp.diagnostics.virtual_text = false
 
 -- you can set a custom on_attach function that will be used for all the language servers
 -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
--- lvim.lsp.on_attach_callback = function(client, bufnr)
---   local function buf_set_option(...)
---	 vim.api.nvim_buf_set_option(bufnr, ...)
---   end
---   --Enable completion triggered by <c-x><c-o>
---   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
--- end
+lvim.lsp.on_attach_callback = function(client, bufnr)
+	-- local function buf_set_option(...)
+	--     vim.api.nvim_buf_set_option(bufnr, ...)
+	-- end
+	-- --Enable completion triggered by <c-x><c-o>
+	-- buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+	require("lsp_signature").on_attach()
+end
 -- you can overwrite the null_ls setup table (useful for setting the root_dir function)
 -- lvim.lsp.null_ls.setup = {
 --   root_dir = require("lspconfig").util.root_pattern("Makefile", ".git", "node_modules"),
@@ -267,7 +270,7 @@ lvim.plugins = {
 			vim.g["vimtex_quickfix_mode"] = 0
 			vim.g["vimtex_view_general_viewer"] = "/mnt/c/Users/ASUS/AppData/Local/SumatraPDF/SumatraPDF.exe"
 			vim.g["vimtex_view_general_options"] = "-reuse-instance -forward-search @tex @line @pdf"
-			vim.g["vimtex_view_general_options_latexmk"] = "-reuse-instance"
+			-- vim.g["vimtex_view_general_options_latexmk"] = "-reuse-instance"
 			-- * If in linux, use the following lines instead.
 			-- vim.g["vimtex_view_general_viewer"] = "zathura"
 			-- vim.g["vimtex_view_method"] = "zathura"
@@ -276,7 +279,6 @@ lvim.plugins = {
 	},
 	{
 		"p00f/nvim-ts-rainbow",
-		config = function() end,
 	},
 	{
 		"ellisonleao/glow.nvim",
@@ -292,10 +294,10 @@ lvim.plugins = {
 	},
 	{
 		"ray-x/lsp_signature.nvim",
-		event = "BufRead",
-		config = function()
-			require("lsp_signature").on_attach()
-		end,
+		-- event = "BufRead",
+		-- config = function()
+		-- 	require("lsp_signature").setup()
+		-- end,
 	},
 	{
 		"simrat39/symbols-outline.nvim",
