@@ -187,7 +187,7 @@ lvim.lsp.diagnostics.virtual_text = false
 
 -- ---@usage Select which servers should be configured manually. Requires `:LvimCacheRest` to take effect.
 -- See the full default list `:lua print(vim.inspect(lvim.lsp.override))`
--- vim.list_extend(lvim.lsp.override, { "pyright" })
+vim.list_extend(lvim.lsp.override, { "clangd" })
 
 -- ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
@@ -232,32 +232,28 @@ formatters.setup({
 		filetypes = { "typescript", "typescriptreact" },
 	},
 	{ exe = "stylua", filetypes = { "lua" } },
-	{
-		exe = "clang-format",
-		args = {
-			'--style="{UseTab: Never, IndentWidth: 4, TabWidth: 4}"',
-			"-i",
-		},
-		filetypes = { "c", "cpp" },
-	},
 })
 
--- -- set additional linters
--- local linters = require "lvim.lsp.null-ls.linters"
--- linters.setup {
---   { exe = "flake8", filetypes = { "python" } },
---   {
---	 exe = "shellcheck",
---	 ---@usage arguments to pass to the formatter
---	 -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
---	 args = { "--severity", "warning" },
---   },
---   {
---	 exe = "codespell",
---	 ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
---	 filetypes = { "javascript", "python" },
---   },
--- }
+-- set additional linters
+local linters = require("lvim.lsp.null-ls.linters")
+linters.setup({
+	{
+		exe = "flake8",
+		filetypes = { "python" },
+		args = { "--max-line-length=88", "--extend-ignore=E203" },
+	},
+	--  {
+	-- exe = "shellcheck",
+	-- ---@usage arguments to pass to the formatter
+	-- -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+	-- args = { "--severity", "warning" },
+	--  },
+	{
+		exe = "codespell",
+		---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+		filetypes = { "javascript", "python" },
+	},
+})
 
 -- Additional Plugins
 lvim.plugins = {
