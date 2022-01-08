@@ -41,6 +41,10 @@ vim.opt.shell = "/bin/sh"
 -- My vim keymappings
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
 lvim.keys.normal_mode["gh"] = "<Cmd>lua vim.lsp.buf.hover()<CR>"
+lvim.lsp.buffer_mappings.normal_mode["gd"] = nil
+lvim.lsp.buffer_mappings.normal_mode["gr"] = nil
+lvim.keys.normal_mode["gd"] = "<cmd>Trouble lsp_definitions<CR>"
+lvim.keys.normal_mode["gr"] = "<cmd>Trouble lsp_references<cr>"
 vim.cmd([[
 	nnoremap <expr> j v:count ? 'j' : 'gj'
 	nnoremap <expr> k v:count ? 'k' : 'gk'
@@ -125,10 +129,10 @@ lvim.builtin.which_key.mappings["t"] = {
 	name = "+Trouble",
 	r = { "<cmd>Trouble lsp_references<cr>", "References" },
 	f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-	d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
+	d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
 	q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
 	l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-	w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
+	w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
 lvim.builtin.which_key.mappings["k"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Show Hover" }
 lvim.builtin.which_key.mappings["r"] = { ":%s//g<Left><Left>", "Global Replace" }
