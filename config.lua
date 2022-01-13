@@ -328,6 +328,7 @@ lvim.plugins = {
 
 lvim.builtin.autopairs.on_config_done = function(autopairs)
 	autopairs.remove_rule("$")
+	autopairs.remove_rule("'")
 end
 
 -- * Shortcuts for plugins
