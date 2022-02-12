@@ -10,7 +10,7 @@ an executable
 
 -- general
 lvim.log.level = "warn"
--- lvim.format_on_save = false
+lvim.format_on_save = true
 lvim.colorscheme = "kanagawa"
 -- vim.g.tokyonight_style = "storm"
 -- lvim.builtin.lualine.style = "default"
@@ -41,6 +41,8 @@ vim.opt.shell = "/bin/sh"
 -- My vim keymappings
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
 lvim.keys.normal_mode["gh"] = "<Cmd>lua vim.lsp.buf.hover()<CR>"
+lvim.keys.normal_mode["<M-Left>"] = "<C-o>"
+lvim.keys.normal_mode["<M-Right>"] = "<C-i>"
 lvim.lsp.buffer_mappings.normal_mode["gd"] = nil
 lvim.lsp.buffer_mappings.normal_mode["gr"] = nil
 lvim.keys.normal_mode["gd"] = "<cmd>Trouble lsp_definitions<CR>"
@@ -76,16 +78,16 @@ vim.cmd([[
 	noremap sv <C-w>t<C-w>H
 ]])
 vim.cmd([[
-	nnoremap <silent> <M-h> :BufferPrevious<CR>
-	nnoremap <silent> <M-l> :BufferNext<CR>
-    nnoremap <silent> <M-H> :BufferMovePrevious<CR>
-    nnoremap <silent> <M-L> :BufferMoveNext<CR>
+	nnoremap <silent> <M-h> :BufferLineCyclePrev<CR>
+	nnoremap <silent> <M-l> :BufferLineCycleNext<CR>
+    nnoremap <silent> <M-H> :BufferLineMovePrev<CR>
+    nnoremap <silent> <M-L> :BufferLineMoveNext<CR>
 	nnoremap <silent> <M-p> :b#<CR>
 	nnoremap <silent> <M-n> :e 
 	nnoremap <silent> <M-q> :bd<CR>
 	nnoremap <silent> <M-Q> :bd!<CR>
-	inoremap <silent> <M-h> <ESC>:BufferPrevious<CR>
-	inoremap <silent> <M-l> <ESC>:BufferNext<CR>
+	inoremap <silent> <M-h> <ESC>:BufferLineCyclePrev<CR>
+	inoremap <silent> <M-l> <ESC>:BufferLineCycleNext<CR>
 	inoremap <silent> <M-p> <ESC>:b#<CR>
 	inoremap <silent> <M-n> <ESC>:enew<CR>
 	inoremap <silent> <M-q> <ESC>:bd<CR>
@@ -120,7 +122,7 @@ lvim.builtin.telescope.defaults.mappings = {
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["q"] = { "<cmd>q<CR>", "Quit" }
 lvim.builtin.which_key.mappings["Q"] = { "<cmd>q!<CR>", "Force Quit" }
-lvim.builtin.which_key.mappings["c"] = { "<cmd>BufferClose<CR>", "Close Buffer" }
+lvim.builtin.which_key.mappings["c"] = { "<cmd>bdelete<CR>", "Close Buffer" }
 lvim.builtin.which_key.mappings["j"] = { "J", "Join Lines" }
 lvim.builtin.which_key.vmappings["j"] = { "J", "Join Lines" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
@@ -323,6 +325,9 @@ lvim.plugins = {
 				css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
 			})
 		end,
+	},
+	{
+		"h-hg/fcitx.nvim",
 	},
 }
 
