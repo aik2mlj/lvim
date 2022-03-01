@@ -11,8 +11,9 @@ an executable
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
+-- lvim.colorscheme = "kanagawa"
 lvim.colorscheme = "kanagawa"
--- vim.g.tokyonight_style = "storm"
+vim.g.tokyonight_style = "storm"
 -- lvim.builtin.lualine.style = "default"
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
@@ -36,6 +37,7 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.indentexpr = ""
 vim.opt.confirm = true
+vim.opt.spelllang = "en,cjk"
 vim.opt.shell = "/bin/sh"
 
 -- My vim keymappings
@@ -43,10 +45,10 @@ lvim.lsp.buffer_mappings.normal_mode["K"] = nil
 lvim.keys.normal_mode["gh"] = "<Cmd>lua vim.lsp.buf.hover()<CR>"
 lvim.keys.normal_mode["<M-Left>"] = "<C-o>"
 lvim.keys.normal_mode["<M-Right>"] = "<C-i>"
-lvim.lsp.buffer_mappings.normal_mode["gd"] = nil
-lvim.lsp.buffer_mappings.normal_mode["gr"] = nil
-lvim.keys.normal_mode["gd"] = "<cmd>Trouble lsp_definitions<CR>"
-lvim.keys.normal_mode["gr"] = "<cmd>Trouble lsp_references<cr>"
+-- lvim.lsp.buffer_mappings.normal_mode["gd"] = nil
+-- lvim.lsp.buffer_mappings.normal_mode["gr"] = nil
+-- lvim.keys.normal_mode["gd"] = "<cmd>Trouble lsp_definitions<CR>"
+-- lvim.keys.normal_mode["gr"] = "<cmd>Trouble lsp_references<cr>"
 vim.cmd([[
 	nnoremap <expr> j v:count ? 'j' : 'gj'
 	nnoremap <expr> k v:count ? 'k' : 'gk'
@@ -61,8 +63,8 @@ vim.cmd([[
 vim.cmd([[
 	noremap <silent> H g^
 	noremap <silent> L g$
-	noremap <silent> J 5j
-	noremap <silent> K 5k
+	noremap <silent> J 5gj
+	noremap <silent> K 5gk
 ]])
 vim.cmd([[
 	noremap <C-f> <C-w>w
@@ -122,7 +124,7 @@ lvim.builtin.telescope.defaults.mappings = {
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["q"] = { "<cmd>q<CR>", "Quit" }
 lvim.builtin.which_key.mappings["Q"] = { "<cmd>q!<CR>", "Force Quit" }
-lvim.builtin.which_key.mappings["c"] = { "<cmd>bdelete<CR>", "Close Buffer" }
+-- lvim.builtin.which_key.mappings["c"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
 lvim.builtin.which_key.mappings["j"] = { "J", "Join Lines" }
 lvim.builtin.which_key.vmappings["j"] = { "J", "Join Lines" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
@@ -141,6 +143,7 @@ lvim.builtin.which_key.mappings["r"] = { ":%s//g<Left><Left>", "Global Replace" 
 lvim.builtin.which_key.vmappings["r"] = { ":s//g<Left><Left>", "Replace" }
 lvim.builtin.which_key.mappings["o"] = { "<cmd>SymbolsOutline<CR>", "Find Symbol" }
 lvim.builtin.which_key.mappings["z"] = { "<cmd>ZenMode<CR>", "Zen Mode" }
+lvim.builtin.which_key.mappings[";"] = { "<cmd>Telescope resume<CR>", "Telescope" }
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -263,7 +266,14 @@ lvim.plugins = {
 	{ "rebelot/kanagawa.nvim" },
 	{
 		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
 		cmd = "TroubleToggle",
+		config = function()
+			require("trouble").setup({
+				height = 5,
+				padding = false,
+			})
+		end,
 	},
 	{
 		"lervag/vimtex",
@@ -327,7 +337,22 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"h-hg/fcitx.nvim",
+		"rmagatti/goto-preview",
+		config = function()
+			require("goto-preview").setup({
+				width = 120, -- Width of the floating window
+				height = 25, -- Height of the floating window
+				default_mappings = true, -- Bind default mappings
+				debug = false, -- Print debug information
+				opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
+				post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+				-- You can use "default_mappings = true" setup option
+				-- Or explicitly set keybindings
+				-- vim.cmd("nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>")
+				-- vim.cmd("nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>")
+				-- vim.cmd("nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>")
+			})
+		end,
 	},
 }
 
