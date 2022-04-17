@@ -11,9 +11,8 @@ an executable
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
--- lvim.colorscheme = "kanagawa"
 lvim.colorscheme = "kanagawa"
-vim.g.tokyonight_style = "storm"
+-- vim.g.tokyonight_style = "storm"
 -- lvim.builtin.lualine.style = "default"
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
@@ -26,6 +25,18 @@ lvim.keys.insert_mode["<C-a>"] = "<ESC>ggVG"
 -- edit a default keymapping
 -- lvim.keys.normal_mode["<C-q>"] = ":q!<CR>"
 -- lvim.keys.insert_mode["<C-q>"] = "<ESC>:q!<CR>"
+
+-- GUI settings for neovide
+vim.opt.guifont = "Delugia Book:h10"
+vim.g.terminal_color_8 = "#0a1124"
+vim.g.terminal_color_1 = "#f35645"
+vim.g.terminal_color_2 = "#EB3247"
+vim.g.terminal_color_3 = "#BC4349"
+vim.g.terminal_color_4 = "#F35645"
+vim.g.terminal_color_5 = "#F6A73B"
+vim.g.terminal_color_6 = "#FAD32F"
+vim.g.terminal_color_7 = "#eec49a"
+-- vim.g.neovide_no_idle = "v:true"
 
 vim.opt.wrap = true
 vim.opt.lbr = true
@@ -139,15 +150,28 @@ lvim.builtin.which_key.mappings["t"] = {
 	w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
 lvim.builtin.which_key.mappings["k"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Show Hover" }
+lvim.builtin.which_key.vmappings["f"] = { 'y<ESC>/<c-r>"<CR>', "Search Selected" }
 lvim.builtin.which_key.mappings["r"] = { ":%s//g<Left><Left>", "Global Replace" }
-lvim.builtin.which_key.vmappings["r"] = { ":s//g<Left><Left>", "Replace" }
+lvim.builtin.which_key.vmappings["r"] = { ":s//g<Left><Left>", "Replace in Selected" }
 lvim.builtin.which_key.mappings["o"] = { "<cmd>SymbolsOutline<CR>", "Find Symbol" }
 lvim.builtin.which_key.mappings["z"] = { "<cmd>ZenMode<CR>", "Zen Mode" }
 lvim.builtin.which_key.mappings[";"] = { "<cmd>Telescope resume<CR>", "Telescope" }
+lvim.builtin.which_key.mappings["n"] = { "<cmd>lua require('nabla').popup()<CR>", "Nabla..." }
+lvim.builtin.which_key.mappings["C"] = { "<cmd>ColorizerToggle<CR>", "Toggle Colorizer" }
+
+lvim.builtin.which_key.mappings["dh"] = { "<cmd>lua require('dap.ui.widgets').hover()<CR>", "Value" }
+lvim.builtin.which_key.mappings["dS"] = {
+	"<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').scopes).open()<CR>",
+	"Toggle Scopes",
+}
+lvim.builtin.which_key.mappings["df"] = {
+	"<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').frames).open()<CR>",
+	"Toggle Frames",
+}
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.dashboard.active = true
+lvim.builtin.alpha.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 1
@@ -162,6 +186,7 @@ lvim.builtin.treesitter.ensure_installed = {
 	"json",
 	"latex",
 	"lua",
+	"markdown",
 	"python",
 	"typescript",
 	"css",
@@ -183,6 +208,14 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- 	-- "Cornsilk",
 -- 	-- "LawnGreen",
 -- }
+
+lvim.builtin.dap.active = true
+local dap = require("dap")
+dap.defaults.fallback.external_terminal = {
+	command = "/usr/bin/alacritty",
+	args = { "-e" },
+}
+-- dap.defaults.fallback.force_external_terminal = true
 
 -- generic LSP settings
 
@@ -280,13 +313,13 @@ lvim.plugins = {
 		config = function()
 			vim.g["tex_flavor"] = "latex"
 			vim.g["vimtex_quickfix_mode"] = 0
-			vim.g["vimtex_view_general_viewer"] = "/mnt/c/Users/ASUS/AppData/Local/SumatraPDF/SumatraPDF.exe"
-			vim.g["vimtex_view_general_options"] = "-reuse-instance -forward-search @tex @line @pdf"
+			-- vim.g["vimtex_view_general_viewer"] = "/mnt/c/Users/ASUS/AppData/Local/SumatraPDF/SumatraPDF.exe"
+			-- vim.g["vimtex_view_general_options"] = "-reuse-instance -forward-search @tex @line @pdf"
 			-- vim.g["vimtex_view_general_options_latexmk"] = "-reuse-instance"
 			-- * If in linux, use the following lines instead.
-			-- vim.g["vimtex_view_general_viewer"] = "zathura"
+			vim.g["vimtex_view_general_viewer"] = "zathura"
 			-- vim.g["vimtex_view_method"] = "zathura"
-			-- vim.g["vimtex_compiler_progname"] = "nvr"
+			vim.g["vimtex_compiler_progname"] = "nvr"
 		end,
 	},
 	{
@@ -354,6 +387,9 @@ lvim.plugins = {
 			})
 		end,
 	},
+	{
+		"jbyuki/nabla.nvim",
+	},
 }
 
 lvim.builtin.autopairs.on_config_done = function(autopairs)
@@ -368,4 +404,5 @@ lvim.keys.normal_mode["\\p"] = "<cmd>MarkdownPreviewToggle<CR>"
 lvim.autocommands.custom_groups = {
 	-- { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
 	-- { "BufWinEnter", "*", "MinimapRefresh" },
+	{ "FileType", "dap-float", "nnoremap <buffer><silent><ESC> <cmd>close!<CR>" },
 }
