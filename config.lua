@@ -10,7 +10,7 @@ an executable
 
 -- general
 lvim.log.level = "warn"
-lvim.format_on_save = false
+lvim.format_on_save = true
 lvim.colorscheme = "kanagawa"
 vim.g.tokyonight_style = "day"
 -- lvim.builtin.lualine.style = "default"
@@ -50,6 +50,7 @@ vim.opt.indentexpr = ""
 vim.opt.confirm = true
 vim.opt.spelllang = "en,cjk"
 vim.opt.shell = "/bin/sh"
+vim.opt.scrolloff = 10
 
 -- My vim keymappings
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
@@ -118,18 +119,18 @@ vim.cmd([[
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
 local _, actions = pcall(require, "telescope.actions")
 lvim.builtin.telescope.defaults.mappings = {
-    -- for input mode
-    i = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-        ["<C-n>"] = actions.cycle_history_next,
-        ["<C-p>"] = actions.cycle_history_prev,
-    },
-    -- for normal mode
-    n = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-    },
+	-- for input mode
+	i = {
+		["<C-j>"] = actions.move_selection_next,
+		["<C-k>"] = actions.move_selection_previous,
+		["<C-n>"] = actions.cycle_history_next,
+		["<C-p>"] = actions.cycle_history_prev,
+	},
+	-- for normal mode
+	n = {
+		["<C-j>"] = actions.move_selection_next,
+		["<C-k>"] = actions.move_selection_previous,
+	},
 }
 
 -- Use which-key to add extra bindings with the leader-key prefix
@@ -141,13 +142,13 @@ lvim.builtin.which_key.vmappings["j"] = { "J", "Join Lines" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 -- lvim.builtin.which_key.mappings["h"] = { "<cmd>nohlsearch<CR><cmd>call minimap#vim#ClearColorSearch()<CR>", "No Highlight", }
 lvim.builtin.which_key.mappings["t"] = {
-    name = "+Trouble",
-    r = { "<cmd>Trouble lsp_references<cr>", "References" },
-    f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-    d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-    q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-    l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-    w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
+	name = "+Trouble",
+	r = { "<cmd>Trouble lsp_references<cr>", "References" },
+	f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+	d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+	q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+	l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+	w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
 lvim.builtin.which_key.mappings["k"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Show Hover" }
 lvim.builtin.which_key.vmappings["f"] = { 'y<ESC>/<c-r>"<CR>', "Search Selected" }
@@ -161,39 +162,42 @@ lvim.builtin.which_key.mappings["C"] = { "<cmd>ColorizerToggle<CR>", "Toggle Col
 
 lvim.builtin.which_key.mappings["dh"] = { "<cmd>lua require('dap.ui.widgets').hover()<CR>", "Value" }
 lvim.builtin.which_key.mappings["dS"] = {
-    "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').scopes).open()<CR>",
-    "Toggle Scopes",
+	"<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').scopes).open()<CR>",
+	"Toggle Scopes",
 }
 lvim.builtin.which_key.mappings["df"] = {
-    "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').frames).open()<CR>",
-    "Toggle Frames",
+	"<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').frames).open()<CR>",
+	"Toggle Frames",
+}
+lvim.builtin.which_key.mappings["gG"] = {
+	"<cmd>lua require('lvim.core.terminal')._exec_toggle({ cmd = 'lazygit', count = 101, direction = 'float'})<CR>",
 }
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.alpha.active = true
 lvim.builtin.terminal.active = true
+lvim.builtin.terminal.start_in_insert = true
 lvim.builtin.notify.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 1
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
-    "bash",
-    "c",
-    "cpp",
-    "fish",
-    "javascript",
-    "json",
-    "latex",
-    "lua",
-    "markdown",
-    "python",
-    "typescript",
-    "css",
-    "rust",
-    "java",
-    "yaml",
+	"bash",
+	"c",
+	"cpp",
+	"fish",
+	"javascript",
+	"json",
+	"latex",
+	"lua",
+	"markdown",
+	"python",
+	"typescript",
+	"css",
+	"rust",
+	"java",
+	"yaml",
 }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
@@ -213,8 +217,8 @@ lvim.builtin.treesitter.highlight.enabled = true
 lvim.builtin.dap.active = true
 local dap = require("dap")
 dap.defaults.fallback.external_terminal = {
-    command = "/usr/bin/alacritty",
-    args = { "-e" },
+	command = "/usr/bin/alacritty",
+	args = { "-e" },
 }
 -- dap.defaults.fallback.force_external_terminal = true
 
@@ -236,12 +240,12 @@ vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "clangd" })
 -- you can set a custom on_attach function that will be used for all the language servers
 -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
 lvim.lsp.on_attach_callback = function(client, bufnr)
-    -- local function buf_set_option(...)
-    --     vim.api.nvim_buf_set_option(bufnr, ...)
-    -- end
-    -- --Enable completion triggered by <c-x><c-o>
-    -- buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-    require("lsp_signature").on_attach()
+	-- local function buf_set_option(...)
+	--     vim.api.nvim_buf_set_option(bufnr, ...)
+	-- end
+	-- --Enable completion triggered by <c-x><c-o>
+	-- buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+	require("lsp_signature").on_attach()
 end
 -- you can overwrite the null_ls setup table (useful for setting the root_dir function)
 -- lvim.lsp.null_ls.setup = {
@@ -262,141 +266,149 @@ end
 -- -- set a formatter, this will override the language server formatting capabilities (if it exists)
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
-    { exe = "black", filetypes = { "python" } },
-    {
-        exe = "prettier",
-        ---@usage arguments to pass to the formatter
-        -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
-        args = { "--print-with", "100" },
-        ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-        filetypes = { "typescript", "typescriptreact" },
-    },
-    { exe = "stylua", filetypes = { "lua" } },
+	-- { exe = "black", filetypes = { "python" } },
+	{
+		exe = "yapf",
+		-- args = { "--style", "facebook" },
+		filetypes = { "python" },
+	},
+	{
+		exe = "prettier",
+		---@usage arguments to pass to the formatter
+		-- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+		args = { "--print-with", "100" },
+		---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+		filetypes = { "typescript", "typescriptreact" },
+	},
+	{ exe = "stylua", filetypes = { "lua" } },
 })
 
 -- set additional linters
 local linters = require("lvim.lsp.null-ls.linters")
 linters.setup({
-    -- {
-    --     exe = "flake8",
-    --     filetypes = { "python" },
-    --     args = { "--max-line-length=88", "--extend-ignore=E203" },
-    -- },
-    --  {
-    -- exe = "shellcheck",
-    -- ---@usage arguments to pass to the formatter
-    -- -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
-    -- args = { "--severity", "warning" },
-    --  },
-    {
-        exe = "codespell",
-        ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-        filetypes = { "javascript", "python" },
-    },
+	{
+		exe = "flake8",
+		filetypes = { "python" },
+		args = { "--max-line-length=88", "--extend-ignore=E203" },
+	},
+	--  {
+	-- exe = "shellcheck",
+	-- ---@usage arguments to pass to the formatter
+	-- -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+	-- args = { "--severity", "warning" },
+	--  },
+	{
+		exe = "codespell",
+		---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+		filetypes = { "javascript", "python" },
+	},
 })
 
 -- Additional Plugins
 lvim.plugins = {
-    { "folke/tokyonight.nvim" },
-    { "rebelot/kanagawa.nvim" },
-    {
-        "folke/trouble.nvim",
-        requires = "kyazdani42/nvim-web-devicons",
-        cmd = "TroubleToggle",
-        config = function()
-            require("trouble").setup({
-                height = 5,
-                padding = false,
-            })
-        end,
-    },
-    {
-        "lervag/vimtex",
-        config = function()
-            vim.g["tex_flavor"] = "latex"
-            vim.g["vimtex_quickfix_mode"] = 0
-            -- vim.g["vimtex_view_general_viewer"] = "/mnt/c/Users/ASUS/AppData/Local/SumatraPDF/SumatraPDF.exe"
-            -- vim.g["vimtex_view_general_options"] = "-reuse-instance -forward-search @tex @line @pdf"
-            -- vim.g["vimtex_view_general_options_latexmk"] = "-reuse-instance"
-            -- * If in linux, use the following lines instead.
-            vim.g["vimtex_view_general_viewer"] = "zathura"
-            -- vim.g["vimtex_view_method"] = "zathura"
-            vim.g["vimtex_compiler_progname"] = "nvr"
-        end,
-    },
-    {
-        "p00f/nvim-ts-rainbow",
-    },
-    {
-        "ellisonleao/glow.nvim",
-        ft = { "markdown" },
-    },
-    {
-        "iamcco/markdown-preview.nvim",
-        run = "cd app && npm install",
-        ft = "markdown",
-        config = function()
-            vim.g.mkdp_auto_start = 1
-        end,
-    },
-    {
-        "ray-x/lsp_signature.nvim",
-        -- event = "BufRead",
-        -- config = function()
-        -- 	require("lsp_signature").setup()
-        -- end,
-    },
-    {
-        "simrat39/symbols-outline.nvim",
-        -- cmd = "SymbolsOutline",
-    },
-    {
-        "folke/zen-mode.nvim",
-        -- config = function()
-        -- 	require("zen-mode").setup()
-        -- end,
-    },
-    -- { "folke/twilight.nvim" },
-    {
-        "norcalli/nvim-colorizer.lua",
-        config = function()
-            require("colorizer").setup({ "*" }, {
-                RGB = true, -- #RGB hex codes
-                RRGGBB = true, -- #RRGGBB hex codes
-                RRGGBBAA = true, -- #RRGGBBAA hex codes
-                rgb_fn = true, -- CSS rgb() and rgba() functions
-                hsl_fn = true, -- CSS hsl() and hsla() functions
-                css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-            })
-        end,
-    },
-    {
-        "rmagatti/goto-preview",
-        config = function()
-            require("goto-preview").setup({
-                width = 120, -- Width of the floating window
-                height = 25, -- Height of the floating window
-                default_mappings = true, -- Bind default mappings
-                debug = false, -- Print debug information
-                opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
-                post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
-                -- You can use "default_mappings = true" setup option
-                -- Or explicitly set keybindings
-                -- vim.cmd("nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>")
-                -- vim.cmd("nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>")
-                -- vim.cmd("nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>")
-            })
-        end,
-    },
-    {
-        "jbyuki/nabla.nvim",
-    },
+	{ "folke/tokyonight.nvim" },
+	{ "rebelot/kanagawa.nvim" },
+	{
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+		cmd = "TroubleToggle",
+		config = function()
+			require("trouble").setup({
+				height = 5,
+				padding = false,
+			})
+		end,
+	},
+	{
+		"lervag/vimtex",
+		config = function()
+			vim.g["tex_flavor"] = "latex"
+			vim.g["vimtex_quickfix_mode"] = 0
+			-- vim.g["vimtex_view_general_viewer"] = "/mnt/c/Users/ASUS/AppData/Local/SumatraPDF/SumatraPDF.exe"
+			-- vim.g["vimtex_view_general_options"] = "-reuse-instance -forward-search @tex @line @pdf"
+			-- vim.g["vimtex_view_general_options_latexmk"] = "-reuse-instance"
+			-- * If in linux, use the following lines instead.
+			vim.g["vimtex_view_general_viewer"] = "zathura"
+			-- vim.g["vimtex_view_method"] = "zathura"
+			vim.g["vimtex_compiler_progname"] = "nvr"
+		end,
+	},
+	{
+		"p00f/nvim-ts-rainbow",
+	},
+	{
+		"ellisonleao/glow.nvim",
+		ft = { "markdown" },
+	},
+	{
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && npm install",
+		ft = "markdown",
+		config = function()
+			vim.g.mkdp_auto_start = 1
+		end,
+	},
+	{
+		"ray-x/lsp_signature.nvim",
+		-- event = "BufRead",
+		-- config = function()
+		-- 	require("lsp_signature").setup()
+		-- end,
+	},
+	{
+		"simrat39/symbols-outline.nvim",
+		-- cmd = "SymbolsOutline",
+	},
+	{
+		"folke/zen-mode.nvim",
+		-- config = function()
+		-- 	require("zen-mode").setup()
+		-- end,
+	},
+	{ "folke/twilight.nvim" },
+	{
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup({ "*" }, {
+				RGB = true, -- #RGB hex codes
+				RRGGBB = true, -- #RRGGBB hex codes
+				RRGGBBAA = true, -- #RRGGBBAA hex codes
+				rgb_fn = true, -- CSS rgb() and rgba() functions
+				hsl_fn = true, -- CSS hsl() and hsla() functions
+				css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+				css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+			})
+		end,
+	},
+	{
+		"rmagatti/goto-preview",
+		config = function()
+			require("goto-preview").setup({
+				width = 120, -- Width of the floating window
+				height = 25, -- Height of the floating window
+				default_mappings = true, -- Bind default mappings
+				debug = false, -- Print debug information
+				opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
+				post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+				-- You can use "default_mappings = true" setup option
+				-- Or explicitly set keybindings
+				-- vim.cmd("nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>")
+				-- vim.cmd("nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>")
+				-- vim.cmd("nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>")
+			})
+		end,
+	},
+	{
+		"jbyuki/nabla.nvim",
+	},
+	{
+		"h-hg/fcitx.nvim",
+	},
 }
 
 lvim.builtin.autopairs.on_config_done = function(autopairs)
-    autopairs.remove_rule("$")
-    autopairs.remove_rule("'")
+	autopairs.remove_rule("$")
+	autopairs.remove_rule("'")
 end
 
 -- * Shortcuts for plugins
