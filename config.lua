@@ -27,7 +27,7 @@ lvim.keys.insert_mode["<C-a>"] = "<ESC>ggVG"
 -- lvim.keys.insert_mode["<C-q>"] = "<ESC>:q!<CR>"
 
 -- GUI settings for neovide
-vim.opt.guifont = "Delugia Book:h10"
+vim.opt.guifont = "Delugia Book:h9"
 vim.g.terminal_color_8 = "#0a1124"
 vim.g.terminal_color_1 = "#f35645"
 vim.g.terminal_color_2 = "#EB3247"
@@ -225,7 +225,7 @@ dap.defaults.fallback.external_terminal = {
 -- generic LSP settings
 
 ---@usage disable automatic installation of servers
-lvim.lsp.automatic_servers_installation = false
+lvim.lsp.automatic_servers_installation = true
 lvim.lsp.diagnostics.virtual_text = false
 -- lvim.lsp.document_highlight = false
 
