@@ -180,6 +180,13 @@ lvim.builtin.terminal.active = true
 lvim.builtin.terminal.start_in_insert = true
 lvim.builtin.notify.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
+lvim.builtin.nvimtree.setup.view.mappings.list = {
+	{ key = "C", action = "cd" },
+	{ key = "l", action = "edit" },
+	{ key = "u", action = "dir_up" },
+	{ key = "J", action = "" },
+	{ key = "K", action = "" },
+}
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -225,7 +232,7 @@ dap.defaults.fallback.external_terminal = {
 -- generic LSP settings
 
 ---@usage disable automatic installation of servers
-lvim.lsp.automatic_servers_installation = true
+lvim.lsp.installer.setup.automatic_installation = true
 lvim.lsp.diagnostics.virtual_text = false
 -- lvim.lsp.document_highlight = false
 
@@ -398,6 +405,7 @@ lvim.plugins = {
 			})
 		end,
 	},
+	{ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
 	{
 		"jbyuki/nabla.nvim",
 	},
