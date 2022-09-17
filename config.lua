@@ -12,6 +12,7 @@ an executable
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.colorscheme = "kanagawa"
+lvim.transparent_window = true
 vim.g.tokyonight_style = "day"
 -- lvim.builtin.lualine.style = "default"
 
@@ -22,6 +23,7 @@ lvim.keys.normal_mode["<C-s>"] = ":w<CR>"
 lvim.keys.insert_mode["<C-s>"] = "<ESC>:w<CR>"
 lvim.keys.normal_mode["<C-a>"] = "ggVG"
 lvim.keys.insert_mode["<C-a>"] = "<ESC>ggVG"
+lvim.keys.normal_mode["gx"] = "<cmd>execute '!xdg-open ' .. shellescape(expand('<cfile>'), v:true)<cr>"
 -- edit a default keymapping
 -- lvim.keys.normal_mode["<C-q>"] = ":q!<CR>"
 -- lvim.keys.insert_mode["<C-q>"] = "<ESC>:q!<CR>"
@@ -50,7 +52,7 @@ vim.opt.indentexpr = ""
 vim.opt.confirm = true
 vim.opt.spelllang = "en,cjk"
 vim.opt.shell = "/bin/sh"
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 20
 
 -- My vim keymappings
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
@@ -149,6 +151,7 @@ lvim.builtin.which_key.mappings["t"] = {
 	q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
 	l = { "<cmd>Trouble loclist<cr>", "LocationList" },
 	w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
+	t = { "<cmd>TodoTrouble<cr>", "Todo list" },
 }
 lvim.builtin.which_key.mappings["k"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Show Hover" }
 lvim.builtin.which_key.vmappings["f"] = { 'y<ESC>/<c-r>"<CR>', "Search Selected" }
@@ -186,6 +189,7 @@ lvim.builtin.nvimtree.setup.view.mappings.list = {
 	{ key = "u", action = "dir_up" },
 	{ key = "J", action = "" },
 	{ key = "K", action = "" },
+	{ key = "<C-t>", action = "" },
 }
 
 -- if you don't want all the parsers change this to a table of the ones you want
@@ -199,6 +203,7 @@ lvim.builtin.treesitter.ensure_installed = {
 	"latex",
 	"lua",
 	"markdown",
+	"markdown_inline",
 	"python",
 	"typescript",
 	"css",
@@ -411,6 +416,13 @@ lvim.plugins = {
 	},
 	{
 		"h-hg/fcitx.nvim",
+	},
+	{
+		"folke/todo-comments.nvim",
+		requires = "nvim-lua/plenary.nvim",
+		config = function()
+			require("todo-comments").setup({})
+		end,
 	},
 }
 
