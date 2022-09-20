@@ -135,6 +135,8 @@ lvim.builtin.telescope.defaults.mappings = {
 	},
 }
 
+lvim.builtin.terminal.open_mapping = "<C-t>"
+
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["o"] = { "<cmd>RnvimrToggle<cr>", "Nvimtree" }
 lvim.builtin.which_key.mappings["q"] = { "<cmd>q<CR>", "Quit" }
@@ -318,7 +320,6 @@ linters.setup({
 
 -- Additional Plugins
 lvim.plugins = {
-	{ "folke/tokyonight.nvim" },
 	{ "rebelot/kanagawa.nvim" },
 	{
 		"folke/trouble.nvim",
