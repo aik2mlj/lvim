@@ -136,6 +136,7 @@ lvim.builtin.telescope.defaults.mappings = {
 }
 
 -- Use which-key to add extra bindings with the leader-key prefix
+lvim.builtin.which_key.mappings["o"] = { "<cmd>RnvimrToggle<cr>", "Nvimtree" }
 lvim.builtin.which_key.mappings["q"] = { "<cmd>q<CR>", "Quit" }
 lvim.builtin.which_key.mappings["Q"] = { "<cmd>q!<CR>", "Force Quit" }
 -- lvim.builtin.which_key.mappings["c"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
@@ -157,7 +158,6 @@ lvim.builtin.which_key.mappings["k"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Sh
 lvim.builtin.which_key.vmappings["f"] = { 'y<ESC>/<c-r>"<CR>', "Search Selected" }
 lvim.builtin.which_key.mappings["r"] = { ":%s//g<Left><Left>", "Global Replace" }
 lvim.builtin.which_key.vmappings["r"] = { ":s//g<Left><Left>", "Replace in Selected" }
-lvim.builtin.which_key.mappings["o"] = { "<cmd>SymbolsOutline<CR>", "Find Symbol" }
 lvim.builtin.which_key.mappings["z"] = { "<cmd>ZenMode<CR>", "Zen Mode" }
 lvim.builtin.which_key.mappings[";"] = { "<cmd>Telescope resume<CR>", "Telescope" }
 lvim.builtin.which_key.mappings["n"] = { "<cmd>lua require('nabla').popup()<CR>", "Nabla..." }
@@ -422,6 +422,16 @@ lvim.plugins = {
 		requires = "nvim-lua/plenary.nvim",
 		config = function()
 			require("todo-comments").setup({})
+		end,
+	},
+	{
+		"kevinhwang91/rnvimr",
+		cmd = "RnvimrToggle",
+		config = function()
+			vim.g.rnvimr_draw_border = 1
+			vim.g.rnvimr_enable_picker = 1
+			vim.g.rnvimr_enable_ex = 1
+			vim.g.rnvimr_enable_bw = 1
 		end,
 	},
 }
