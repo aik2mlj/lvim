@@ -12,7 +12,9 @@ an executable
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.colorscheme = "kanagawa"
-lvim.transparent_window = true
+if vim.g.neovide == nil then
+	lvim.transparent_window = true
+end
 vim.g.tokyonight_style = "day"
 -- lvim.builtin.lualine.style = "default"
 
@@ -29,15 +31,8 @@ lvim.keys.normal_mode["gx"] = "<cmd>execute '!xdg-open ' .. shellescape(expand('
 -- lvim.keys.insert_mode["<C-q>"] = "<ESC>:q!<CR>"
 
 -- GUI settings for neovide
-vim.opt.guifont = "Delugia Book:h9"
-vim.g.terminal_color_8 = "#0a1124"
-vim.g.terminal_color_1 = "#f35645"
-vim.g.terminal_color_2 = "#EB3247"
-vim.g.terminal_color_3 = "#BC4349"
-vim.g.terminal_color_4 = "#F35645"
-vim.g.terminal_color_5 = "#F6A73B"
-vim.g.terminal_color_6 = "#FAD32F"
-vim.g.terminal_color_7 = "#eec49a"
+vim.opt.guifont = "Delugia Book:h9.5"
+vim.g.neovide_transparency = 0.5
 -- vim.g.neovide_no_idle = "v:true"
 
 vim.opt.wrap = true
@@ -239,7 +234,6 @@ dap.defaults.fallback.external_terminal = {
 -- generic LSP settings
 
 ---@usage disable automatic installation of servers
-lvim.lsp.installer.setup.automatic_installation = true
 lvim.lsp.diagnostics.virtual_text = false
 -- lvim.lsp.document_highlight = false
 
