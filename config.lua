@@ -133,7 +133,7 @@ lvim.builtin.telescope.defaults.mappings = {
 lvim.builtin.terminal.open_mapping = "<C-t>"
 
 -- Use which-key to add extra bindings with the leader-key prefix
-lvim.builtin.which_key.mappings["o"] = { "<cmd>RnvimrToggle<cr>", "Nvimtree" }
+lvim.builtin.which_key.mappings["o"] = { "<cmd>RnvimrToggle<cr>", "Rnvimr" }
 lvim.builtin.which_key.mappings["q"] = { "<cmd>q<CR>", "Quit" }
 lvim.builtin.which_key.mappings["Q"] = { "<cmd>q!<CR>", "Force Quit" }
 -- lvim.builtin.which_key.mappings["c"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
