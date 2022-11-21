@@ -178,7 +178,6 @@ lvim.builtin.which_key.mappings["gG"] = {
 lvim.builtin.alpha.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.terminal.start_in_insert = true
-lvim.builtin.notify.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.view.mappings.list = {
 	{ key = "C", action = "cd" },
@@ -428,6 +427,9 @@ lvim.plugins = {
 			vim.g.rnvimr_enable_ex = 1
 			vim.g.rnvimr_enable_bw = 1
 		end,
+	},
+	{
+		"lukas-reineke/headlines.nvim",
 	},
 }
 
