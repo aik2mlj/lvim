@@ -15,7 +15,6 @@ lvim.colorscheme = "kanagawa"
 if vim.g.neovide == nil then
 	lvim.transparent_window = true
 end
-vim.g.tokyonight_style = "day"
 -- lvim.builtin.lualine.style = "default"
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
@@ -31,7 +30,7 @@ lvim.keys.normal_mode["gx"] = "<cmd>execute '!xdg-open ' .. shellescape(expand('
 -- lvim.keys.insert_mode["<C-q>"] = "<ESC>:q!<CR>"
 
 -- GUI settings for neovide
-vim.opt.guifont = "Delugia Book:h9.5"
+vim.opt.guifont = "FiraCode Nerd Font:h10"
 vim.g.neovide_transparency = 0.5
 -- vim.g.neovide_no_idle = "v:true"
 
@@ -153,6 +152,7 @@ lvim.builtin.which_key.mappings["t"] = {
 }
 lvim.builtin.which_key.mappings["k"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Show Hover" }
 lvim.builtin.which_key.vmappings["f"] = { 'y<ESC>/<c-r>"<CR>', "Search Selected" }
+lvim.builtin.which_key.vmappings["F"] = { "<cmd>Telescope grep_string<cr>", "Global Search Selected" }
 lvim.builtin.which_key.mappings["r"] = { ":%s//g<Left><Left>", "Global Replace" }
 lvim.builtin.which_key.vmappings["r"] = { ":s//g<Left><Left>", "Replace in Selected" }
 lvim.builtin.which_key.mappings["z"] = { "<cmd>ZenMode<CR>", "Zen Mode" }
@@ -346,14 +346,14 @@ lvim.plugins = {
 		"ellisonleao/glow.nvim",
 		ft = { "markdown" },
 	},
-	{
-		"iamcco/markdown-preview.nvim",
-		run = "cd app && npm install",
-		ft = "markdown",
-		config = function()
-			vim.g.mkdp_auto_start = 1
-		end,
-	},
+	-- {
+	-- 	"iamcco/markdown-preview.nvim",
+	-- 	run = "cd app && npm install",
+	-- 	ft = "markdown",
+	-- 	config = function()
+	-- 		vim.g.mkdp_auto_start = 1
+	-- 	end,
+	-- },
 	{
 		"ray-x/lsp_signature.nvim",
 		-- event = "BufRead",
