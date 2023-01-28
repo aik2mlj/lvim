@@ -316,7 +316,7 @@ lvim.plugins = {
 	{ "rebelot/kanagawa.nvim" },
 	{
 		"folke/trouble.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
+		dependencies = "nvim-tree/nvim-web-devicons",
 		cmd = "TroubleToggle",
 		config = function()
 			require("trouble").setup({
@@ -404,7 +404,7 @@ lvim.plugins = {
 			})
 		end,
 	},
-	{ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
+	{ "sindrets/diffview.nvim", dependencies = "nvim-lua/plenary.nvim" },
 	{
 		"jbyuki/nabla.nvim",
 	},
@@ -413,7 +413,7 @@ lvim.plugins = {
 	},
 	{
 		"folke/todo-comments.nvim",
-		requires = "nvim-lua/plenary.nvim",
+		dependencies = "nvim-lua/plenary.nvim",
 		config = function()
 			require("todo-comments").setup({})
 		end,
@@ -431,6 +431,7 @@ lvim.plugins = {
 	{
 		"lukas-reineke/headlines.nvim",
 	},
+	{ "kylechui/nvim-surround" },
 }
 
 lvim.builtin.autopairs.on_config_done = function(autopairs)
