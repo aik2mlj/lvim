@@ -46,7 +46,7 @@ vim.opt.indentexpr = ""
 vim.opt.confirm = true
 vim.opt.spelllang = "en,cjk"
 vim.opt.shell = "/bin/sh"
-vim.opt.scrolloff = 20
+vim.opt.scrolloff = 15
 
 -- My vim keymappings
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
@@ -178,15 +178,8 @@ lvim.builtin.which_key.mappings["gG"] = {
 lvim.builtin.alpha.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.terminal.start_in_insert = true
-lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.setup.view.mappings.list = {
-	{ key = "C", action = "cd" },
-	{ key = "l", action = "edit" },
-	{ key = "u", action = "dir_up" },
-	{ key = "J", action = "" },
-	{ key = "K", action = "" },
-	{ key = "<C-t>", action = "" },
-}
+local on_attach = require("nvim-tree-on-attach").on_attach
+lvim.builtin.nvimtree.setup.on_attach = on_attach
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -307,13 +300,28 @@ linters.setup({
 	{
 		exe = "codespell",
 		---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-		filetypes = { "javascript", "python" },
+		-- filetypes = { "javascript", "python", "markdown", "html" },
 	},
 })
 
 -- Additional Plugins
 lvim.plugins = {
-	{ "rebelot/kanagawa.nvim" },
+	{
+		"rebelot/kanagawa.nvim",
+		config = function()
+			require("kanagawa").setup({
+				colors = {
+					theme = {
+						all = {
+							ui = {
+								bg_gutter = "none",
+							},
+						},
+					},
+				},
+			})
+		end,
+	},
 	{
 		"folke/trouble.nvim",
 		dependencies = "nvim-tree/nvim-web-devicons",
@@ -432,6 +440,27 @@ lvim.plugins = {
 		"lukas-reineke/headlines.nvim",
 	},
 	{ "kylechui/nvim-surround" },
+	{
+		"cameron-wags/rainbow_csv.nvim",
+		config = function()
+			require("rainbow_csv").setup()
+		end,
+		-- optional lazy-loading below
+		lazy = {
+			"rainbow_csv",
+			"rainbow_csv.fns",
+		},
+		ft = {
+			"csv",
+			"tsv",
+			"csv_semicolon",
+			"csv_whitespace",
+			"csv_pipe",
+			"rfc_csv",
+			"rfc_semicolon",
+		},
+	},
+	{ "folke/tokyonight.nvim" },
 }
 
 lvim.builtin.autopairs.on_config_done = function(autopairs)
