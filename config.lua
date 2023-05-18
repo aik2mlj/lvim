@@ -93,7 +93,7 @@ vim.cmd([[
     nnoremap <silent> <M-H> :BufferLineMovePrev<CR>
     nnoremap <silent> <M-L> :BufferLineMoveNext<CR>
 	nnoremap <silent> <M-p> :b#<CR>
-	nnoremap <silent> <M-n> :e 
+	nnoremap <silent> <M-n> :e
 	nnoremap <silent> <M-q> :bd<CR>
 	nnoremap <silent> <M-Q> :bd!<CR>
 	inoremap <silent> <M-h> <ESC>:BufferLineCyclePrev<CR>
@@ -226,12 +226,16 @@ dap.defaults.fallback.external_terminal = {
 -- generic LSP settings
 
 ---@usage disable automatic installation of servers
-lvim.lsp.diagnostics.virtual_text = false
+vim.diagnostic.config({ virtual_text = false })
 -- lvim.lsp.document_highlight = false
 
 -- ---@usage Select which servers should be configured manually. Requires `:LvimCacheRest` to take effect.
 -- See the full default list `:lua print(vim.inspect(lvim.lsp.override))`
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "clangd" })
+
+lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+	return server ~= "ltex"
+end, lvim.lsp.automatic_configuration.skipped_servers)
 
 -- ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
