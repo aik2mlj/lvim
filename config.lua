@@ -202,6 +202,7 @@ lvim.builtin.treesitter.ensure_installed = {
 }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
+vim.filetype.add({ extension = { typ = "typst" } })
 lvim.builtin.treesitter.highlight.enabled = true
 -- lvim.builtin.treesitter.highlight.disable = {}
 -- lvim.builtin.treesitter.rainbow.enable = true
@@ -465,6 +466,7 @@ lvim.plugins = {
 		},
 	},
 	{ "folke/tokyonight.nvim" },
+	{ "kaarmu/typst.vim", ft = "typst" },
 }
 
 lvim.builtin.autopairs.on_config_done = function(autopairs)
